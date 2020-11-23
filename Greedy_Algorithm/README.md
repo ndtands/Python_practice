@@ -1,5 +1,5 @@
 # Giải thuật Tham lam
-## Bài toán đặt ra:
+### 1. Bài toán đặt ra:
 <table>
   <thead>
     <tr>
@@ -51,12 +51,12 @@
   </tbody>
 </table>
 
-## Yêu cầu :
+### Yêu cầu :
 - Join có N hoạt động, hoạt động thứ i bắt đầu lúc L[i] và kết thúc vào thời gian R[i]
 - Join có thể thực hiện được hoạt động i và hoạt động j, nếu 2 khoảng thời gian là không giao nhau.
 - Làm cách nào để anh ta có thể  thực hiện tối đa các hoạt động.
 
-## Giải thuật :
+### Giải thuật :
 - cách tiếp cận 1: Chọn L[i] nhỏ nhất
 - cách tiếp cận 2: Chọn hoạt động có R[i]-L[i] nhỏ nhất
 - Cách tiếp cận 3: Chọn hoạt động ít giao với ít hoạt động khác nhất.
@@ -88,3 +88,60 @@
 
     Return A
 ```
+
+## 1. Bài toán Wold Place
+### Bài toán :
+Cho n đất nước, mỗi nước có dân số của họ. Hãy chia thành các nhóm có k người không có cùng quốc tịch. Hãy cho biết số lượng tối đa có thể đạt được.
+- Hướng tiếp cận thứ 1:
+```python
+Groups = 0
+Repeat
+  // sắp xếp lại mảng theo thứ tự giảm dần
+  Sort (A)
+  Min = A[K]
+  If Min > 0
+      Groups = Groups + 1
+  For I = 1 to K
+    A[I] = A[I] - 1
+  Endfor
+Until  Min = 0
+Return Groups
+```
+=> Hướng giải quyết này cho kế t quả chính xác, nhưng tốc độ sẽ lâu và chậm
+- Hướng tiếp cận thứ 2:
+```python
+Groups = 0
+Repeat
+  // sắp xếp lại mảng theo thứ tự giảm dần
+  Sort (A)
+  Min= A[K]
+  Groups = Groups + Min
+  For I = 1 to K
+    A[I] = A[I] - Min
+  Endfor
+Until Min = 0
+Return Groups
+```
+=> Hướng giải quyết này cho kết quả sai, nhưng tốc độ xử lý nhanh
+- Hướng tiếp cận thứ 3
+Giải quyết các khuyết điểm ở trên dùng phương pháp vét cạn
+```python
+Groups = 0
+Repeat
+// sắp xếp lại mảng theo thứ tự giảm dần
+  Sort (A)
+  Min = A[K]
+  Allowance = (Min+999) / 1000
+  Groups = Groups + Allowance
+  For I = 1 to K
+    A[I] = A[I] - Allowance
+  Endfor
+Until Min = 0
+Return Groups
+```
+=> Giải thuật này có thể đúng hầu hết các trường hợp, song vẫn tồn tại một vài trường hợp sai
+
+## Tổng kết :
+- Giải thuật tham lam không phải lúc nào cũng cho kết quả đúng.
+- Rủi ro cao hơn giải thuật quy hoạch động
+- Đối với những bài toán mà có dữ liệu đầu vào lớn và rất lớn (kể cả độ phức tạp O(n^2)) thường dược dùng giải thuật tham lam hơn là quy hoạch động
